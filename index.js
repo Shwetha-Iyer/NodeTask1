@@ -8,6 +8,12 @@ app.use(express.json());
 const dbURL = process.env.DB_URL;
 const objectId = mongodb.ObjectID;
 
+// initial page
+app.get("/",(req,res)=>{
+    res.status(200).send("Hello there!<br> Access /student for all student details <br> Access /mentor for all mentor details");
+});
+
+
 //get all details of all students
 app.get("/student",async(req,res)=>{
     try{
