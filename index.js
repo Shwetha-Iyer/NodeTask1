@@ -1,5 +1,6 @@
 const express = require("express");
 const mongodb = require("mongodb");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,7 +8,7 @@ const mongoClient = mongodb.MongoClient;
 app.use(express.json());
 const dbURL = process.env.DB_URL;
 const objectId = mongodb.ObjectID;
-
+app.use(cors());
 // initial page
 app.get("/",(req,res)=>{
     res.status(200).send("Hello there!<br> Access /student for all student details <br> Access /mentor for all mentor details");
@@ -17,6 +18,7 @@ app.get("/",(req,res)=>{
 //get all details of all students
 app.get("/student",async(req,res)=>{
     try{
+        console.log("included cors");
         let client = await mongoClient.connect(dbURL);
         let db = client.db("myDB");
         let data = await db.collection("student").find().toArray();
